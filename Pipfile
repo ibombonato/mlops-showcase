@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 prefect = "*"
+scikit-learn = "*"
+matplotlib = "*"
 
 [dev-packages]
 pytest = "*"
