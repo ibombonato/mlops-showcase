@@ -1,4 +1,6 @@
 .vscode
+dev.env
+prod.env
 
 # Byte-com
 piled / optimized / DLL files
