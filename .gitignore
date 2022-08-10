@@ -1,4 +1,11 @@
-# Byte-compiled / optimized / DLL files
+.vscode
+dev.env
+prod.env
+
+output/
+
+# Byte-com
+piled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
