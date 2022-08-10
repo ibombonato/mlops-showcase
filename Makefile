@@ -24,11 +24,11 @@ quality_checks:
 	black .
 	pylint --recursive=y .
 
-prefect:
-#	prefect config set PREFECT_API_URL="https://api.prefect.cloud/api/accounts/[ACCOUNT-ID]/workspaces/[WORKSPACE-ID]"
-#	prefect config set PREFECT_API_KEY=${PREFECT_API_KEY}
-	prefect cloud workspace set --workspace ${PREFECT_WORKSPACE}
-	prefect cloud login -k ${PREFECT_API_KEY}
+prefect: devEnv
+	prefect config set PREFECT_API_URL=${PREFECT_API_URL}
+	prefect config set PREFECT_API_KEY=${PREFECT_API_KEY}
+#	prefect cloud workspace set --workspace ${PREFECT_WORKSPACE}
+#	prefect cloud login -k ${PREFECT_API_KEY}
 
 setup: prodEnv prefect
 	echo Running installers

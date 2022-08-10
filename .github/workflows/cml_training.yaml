@@ -1,0 +1,42 @@
+name: train-my-model
+
+on: [pull_request]
+
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - uses: iterative/setup-cml@v1
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Prepare environment
+        run: |
+          pip install pipenv
+          pipenv lock --keep-outdated --requirements > requirements.txt
+          pip install -r requirements.txt
+
+      - name: Setup Prefect
+        env:
+          PREFECT_API_KEY: ${{ secrets.PREFECT_API_KEY }}
+          PREFECT_API_URL: ${{ secrets.PREFECT_API_URL}}
+        run: |
+          prefect config set PREFECT_API_URL=${PREFECT_API_URL} > /dev/null 2>&1
+          prefect config set PREFECT_API_KEY=${PREFECT_API_KEY} > /dev/null 2>&1
+
+      - name: cml
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir output
+          python src/training_pipeline.py
+
+          cat output/metrics.txt >> report.md
+          cml publish output/plot.png --md >> report.md
+          cml send-comment --pr report.md
