@@ -3,6 +3,7 @@ dev.env
 prod.env
 
 output/
+wandb/
 
 # Byte-com
 piled / optimized / DLL files

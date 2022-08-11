@@ -40,5 +40,8 @@ setup_dev: devEnv prefect
 	pipenv install --dev
 	pre-commit install
 
+train_model: devEnv
+	python src/training_pipeline.py
+
 run: tests quality_checks
 	echo Running All
