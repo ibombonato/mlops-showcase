@@ -15,6 +15,7 @@ isort = "*"
 black = "*"
 pylint = "*"
 pre-commit = "*"
+ipykernel = "*"
 
 [requires]
 python_version = "3.8"

@@ -36,7 +36,7 @@ def train_model(X_train, y_train):
     """Make classifier pipeline"""
     clf = Pipeline([("scaler", StandardScaler()), ("svc", SVC())])
     clf.fit(X_train, y_train)
-    joblib.dump(clf, "output/model.pkl")
+    joblib.dump(clf, "./output/model.pkl")
     # clf = SVC(random_state=0)
     # clf.fit(X_train, y_train)
     return clf

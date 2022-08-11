@@ -4,6 +4,8 @@ prod.env
 
 output/
 wandb/
+artifacts/
+notebooks/
 
 # Byte-com
 piled / optimized / DLL files
