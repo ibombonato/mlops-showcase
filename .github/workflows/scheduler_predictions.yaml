@@ -1,17 +1,15 @@
-name: train-my-model
+name: predict-new-data
 
-on: [pull_request]
+# This action will trigger the predictions at minute 0 past every 6th hour.
+on:
+  schedule:
+    - cron: '0 */6 * * *'
 
 jobs:
   run:
     runs-on: [ubuntu-latest]
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - uses: iterative/setup-cml@v1
       - uses: actions/setup-python@v2
         with:
           python-version: '3.8'
@@ -22,7 +20,7 @@ jobs:
           pipenv lock --keep-outdated --requirements > requirements.txt
           pip install -r requirements.txt
 
-      - name: cml
+      - name: Predict and retrain
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PREFECT_API_KEY: ${{ secrets.PREFECT_API_KEY }}
@@ -33,8 +31,4 @@ jobs:
           MODEL: ${{ secrets.MODEL }}
         run: |
           mkdir output
-          python src/training_pipeline.py
-
-          cat output/metrics.txt >> report.md
-          cml publish output/plot.png --md >> report.md
-          cml send-comment --pr report.md
+          python src/model_predict.py
