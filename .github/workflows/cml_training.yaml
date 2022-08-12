@@ -33,6 +33,10 @@ jobs:
       - name: cml
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+          WANDB_PROJECT: ${{ secrets.WANDB_PROJECT }}
+          MODEL_REGISTRY: ${{ secrets.MODEL_REGISTRY }}
+          MODEL: ${{ secrets.MODEL }}
         run: |
           mkdir output
           python src/training_pipeline.py
