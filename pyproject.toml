@@ -2,7 +2,8 @@
 
 disable = [
     "missing-module-docstring",
-    "too-few-public-methods"
+    "too-few-public-methods",
+    "bare-except"
 ]
 
 [tool.black]
@@ -12,4 +13,4 @@ target-version = ['py38']
 
 [tool.isort]
 multi_line_output = 3
-length_sort = true
+#length_sort = true
