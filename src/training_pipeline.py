@@ -1,4 +1,4 @@
-# pylint: disable=C0103
+# pylint: disable=C0103,W0611
 import os
 from pathlib import Path
 
@@ -8,10 +8,12 @@ from prefect import flow, get_run_logger, task
 from sklearn.datasets import make_classification
 from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
-from wandb.beta.workflows import link_model, log_model
+from sklearn.tree import DecisionTreeClassifier
+from wandb.beta.workflows import link_model, log_model, use_model
 
 import wandb
 from components.tracking.wandb_utils import setup_tracker
@@ -34,11 +36,14 @@ def split_data(X, y):
 @task
 def train_model(X_train, y_train):
     """Make classifier pipeline"""
-    clf = Pipeline([("scaler", StandardScaler()), ("svc", SVC())])
+
+    # clf = Pipeline([("scaler", StandardScaler()), ("svc",  SVC())])
+    # clf = Pipeline([("scaler", StandardScaler()), ("nb",  GaussianNB())])
+    clf = Pipeline(
+        [("scaler", StandardScaler()), ("tree", DecisionTreeClassifier(max_depth=3))]
+    )
     clf.fit(X_train, y_train)
     joblib.dump(clf, "./output/model.pkl")
-    # clf = SVC(random_state=0)
-    # clf.fit(X_train, y_train)
     return clf
 
 
@@ -59,11 +64,36 @@ def plot_results(clf, X_test, y_test):
     plt.savefig("output/plot.png")
 
 
-@task
-def regiter_model(clf):
-    """Register the model"""
+@flow
+def compare_and_register_model(clf, X_test, y_test):
+    """Compare and registry as best model"""
+    is_best = is_best_model(clf, X_test, y_test)
     model_version = log_model(clf, os.environ["WANDB_PROJECT"])
-    link_model(model_version, os.environ["MODEL_REGISTRY"])
+    link_model(
+        model_version, os.environ["MODEL_REGISTRY"], ["best"] if is_best else None
+    )
+
+
+@task
+def is_best_model(clf, X_test, y_test):
+    """
+    Check if this model is better then the actual best model.
+    If so, this is mared as the best model.
+    """
+    try:
+        best_model = use_model(f"{os.environ['MODEL']}:best")
+        best_model = best_model.model_obj()
+    except:
+        best_model = None
+
+    if best_model is None:
+        return True
+
+    best_acc = best_model.score(X_test, y_test)
+
+    this_acc = clf.score(X_test, y_test)
+
+    return this_acc > best_acc
 
 
 @flow(name="Training Flow")
@@ -77,7 +107,9 @@ def training_flow():
     clf = train_model(X_train, y_train)
     write_metrics(clf, X_test, y_test)
     plot_results(clf, X_test, y_test)
-    regiter_model(clf)
+    # register_model(clf)
+    # model_version = register_model(clf)
+    compare_and_register_model(clf, X_test, y_test)
 
 
 if __name__ == "__main__":

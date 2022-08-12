@@ -16,6 +16,7 @@ black = "*"
 pylint = "*"
 pre-commit = "*"
 ipykernel = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.8"
