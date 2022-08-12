@@ -24,18 +24,13 @@ quality_checks:
 	black .
 	pylint --recursive=y .
 
-prefect: devEnv
+prefect:
 	prefect config set PREFECT_API_URL=${PREFECT_API_URL}
 	prefect config set PREFECT_API_KEY=${PREFECT_API_KEY}
 #	prefect cloud workspace set --workspace ${PREFECT_WORKSPACE}
 #	prefect cloud login -k ${PREFECT_API_KEY}
 
-setup: prodEnv prefect
-	echo Running installers
-#	pipenv install --dev
-#	pre-commit install
-
-setup_dev: devEnv prefect
+setup_dev: devEnv
 	echo Running installers
 	pipenv install --dev
 	pre-commit install
@@ -48,3 +43,12 @@ predict_model: devEnv
 
 run: tests quality_checks
 	echo Running All
+
+build-image:
+	docker build -t ibombonato/mlops-showcase .
+
+run-image:
+	docker run --rm --env-file dev.env ibombonato/mlops-showcase
+
+build: run
+	pipenv lock
