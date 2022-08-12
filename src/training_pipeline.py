@@ -22,14 +22,14 @@ from components.tracking.wandb_utils import setup_tracker
 @task
 def get_data():
     """Get the data"""
-    X, y = make_classification(random_state=0)
+    X, y = make_classification(random_state=0, n_samples=10000, shuffle=False)
     return X, y
 
 
 @task
 def split_data(X, y):
     """Split data"""
-    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y)
     return X_train, X_test, y_train, y_test
 
 
