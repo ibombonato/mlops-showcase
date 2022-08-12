@@ -2,6 +2,7 @@ name: predict-new-data
 
 # This action will trigger the predictions at minute 0 past every 6th hour.
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 */6 * * *'
 
