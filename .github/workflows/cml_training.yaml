@@ -19,8 +19,7 @@ jobs:
       - name: Prepare environment
         run: |
           pip install pipenv
-          pipenv lock --keep-outdated --requirements > requirements.txt
-          pip install -r requirements.txt
+          pipenv install --system --deploy --ignore-pipfile
 
       - name: cml
         env:
