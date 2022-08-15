@@ -8,7 +8,7 @@ from wandb.beta.workflows import use_model
 
 from training_pipeline import training_flow
 
-from .components.tracking.wandb_utils import setup_tracker
+from .wandb_utils import setup_tracker
 
 
 @task
