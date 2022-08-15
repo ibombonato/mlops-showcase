@@ -11,13 +11,18 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-COPY ["Pipfile", "Makefile", "./"]
+COPY ["Pipfile", "Pipfile.lock", "Makefile", "./"]
 COPY src/ /app/src/
 
 RUN python -m pip install --upgrade pip && \
     pip install pipenv && \
-    pipenv lock --keep-outdated --requirements > requirements.txt && \
-    pip install -r requirements.txt
+    pipenv install --system --deploy --ignore-pipfile
+
+ENV PATH=".venv/bin:$PATH"
+
+    #pip install pipenv && \
+    #pipenv lock --keep-outdated --requirements > requirements.txt && \
+    #pip install -r requirements.txt
 
 #RUN pipenv install --system --deploy --ignore-pipfile
 
