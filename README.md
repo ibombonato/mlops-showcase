@@ -31,7 +31,7 @@ Also it do not aims to have extensive code coverage or demonstrate how to effect
 
 To run the project, you will need the cloud services bellow:
 
-- Github. github.com
+- Github. https://github.com
 - Prefect Cloud. https://www.prefect.io/
 - Weights & Biases. https://wandb.ai/
 
@@ -41,7 +41,7 @@ The project itself will make use of:
 - Python 3.8
 - Prefect Cloud
 - Weights & Biases
-- CML [Continuous Machine Learning from DVC - Iterative.ai](https://github.com/iterative/cml#getting-started)
+- CML - [Continuous Machine Learning from DVC - Iterative.ai](https://github.com/iterative/cml#getting-started)
 - Github
 - Github Actions
 - Pipenv
@@ -134,7 +134,7 @@ Experiment Tracker:
 https://wandb.ai/ibombonato/MLOPS-TEST-PROJECT?workspace=user-ibombonato
 
 Model Registry:
-https://wandb.ai/registry/model?selectionPath=ibombonato%2Fmodel-registry%2Fmlops-test
+https://wandb.ai/ibombonato/model-registry/artifacts/model/mlops-test/v19
 
 ![Wandb-Experiment-Tracking](docs/experiment_tracking.JPG)
 
