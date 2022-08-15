@@ -7,8 +7,7 @@ from sklearn.datasets import make_classification
 from wandb.beta.workflows import use_model
 
 from training_pipeline import training_flow
-
-from .wandb_utils import setup_tracker
+from wandb_utils import setup_tracker
 
 
 @task
