@@ -3,7 +3,8 @@
 disable = [
     "missing-module-docstring",
     "too-few-public-methods",
-    "bare-except"
+    "bare-except",
+    "invalid-name"
 ]
 
 [tool.black]
@@ -14,3 +15,8 @@ target-version = ['py38']
 [tool.isort]
 multi_line_output = 3
 #length_sort = true
+
+[tool.pytest.ini_options]
+pythonpath = [
+  ".", "src",
+]
