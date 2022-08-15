@@ -6,8 +6,9 @@ from prefect import flow, get_run_logger, task
 from sklearn.datasets import make_classification
 from wandb.beta.workflows import use_model
 
-from components.tracking.wandb_utils import setup_tracker
 from training_pipeline import training_flow
+
+from .components.tracking.wandb_utils import setup_tracker
 
 
 @task

@@ -16,7 +16,8 @@ from sklearn.tree import DecisionTreeClassifier
 from wandb.beta.workflows import link_model, log_model, use_model
 
 import wandb
-from components.tracking.wandb_utils import setup_tracker
+
+from .components.tracking.wandb_utils import setup_tracker
 
 
 @task

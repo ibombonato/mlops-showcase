@@ -1,5 +1,6 @@
-# mlops-showcase
-Showcase an MLOps project
+# Mlopszoomcamp final project
+
+This project aims to
 
 
 ## Environment
