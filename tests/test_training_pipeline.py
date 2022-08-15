@@ -1,3 +1,4 @@
+# pylint: disable=E0401
 from src.training_pipeline import is_best_model
 
 

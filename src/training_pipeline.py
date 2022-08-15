@@ -1,4 +1,4 @@
-# pylint: disable=C0103,W0611
+# pylint: disable=C0103,W0611,E0401
 import os
 from pathlib import Path
 
@@ -16,8 +16,7 @@ from sklearn.tree import DecisionTreeClassifier
 from wandb.beta.workflows import link_model, log_model, use_model
 
 import wandb
-
-from .components.tracking.wandb_utils import setup_tracker
+from src.components.tracking.wandb_utils import setup_tracker
 
 
 @task

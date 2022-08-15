@@ -3,7 +3,8 @@
 disable = [
     "missing-module-docstring",
     "too-few-public-methods",
-    "bare-except"
+    "bare-except",
+    "invalid-name"
 ]
 
 [tool.black]
