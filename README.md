@@ -217,6 +217,8 @@ This project follow software engineering best pratices and make uses of:
 
 ![Best-Pratices](docs/best-pratices.JPG)
 
+![CI-CD-Tests-Integration](docs/gh-ci-cd.JPG)
+
 ## Caveats
 
 As stated by Alexey Grigorev the project could use synthetic data
